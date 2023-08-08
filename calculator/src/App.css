@@ -1,0 +1,54 @@
+*{
+  box-sizing: border-box;
+}
+
+body{
+  margin:0px;
+  background-color:rgb(8, 152, 152);
+}
+
+.Calculator-Grid{
+  display:grid;
+  margin-top: 2rem;
+  grid-template-columns: repeat(4,6rem);   /* generates 4 different columns */
+  grid-template-rows: minmax(7rem,auto) repeat(5,6rem); /*5 rows after the first */
+}
+
+.Calculator-Grid > button{
+  cursor: pointer;
+  font-size: 2rem;
+  border: 1px solid white;
+  outline:none;
+  justify-content: center;
+  background-color: rgb(255,255,255,.75);
+}
+.Calculator-Grid > button:focus,
+.Calculator-Grid > button:hover{
+  background-color: rgb(255,255,255,.9);
+}
+
+.span-two{
+  grid-column: span 2;
+}
+
+.output{
+  grid-column:1 /-1;  /*from the first row to the start*/
+  background-color: black;
+  display: flex;
+  flex-direction: column;   /*stack the items vertically*/
+  align-items: flex-end;
+  justify-content: space-around;
+  padding:.75rem;
+  word-wrap:break-word;
+  word-break: break-all;
+}
+
+.output .prev-operand{
+  color: white;
+  font-size: 1.5rem;
+}
+
+.output .curr-operand{
+  color: white;
+  font-size:2.5rem;
+}
