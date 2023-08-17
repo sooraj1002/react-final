@@ -1,7 +1,7 @@
-import {useState,useEffect} from 'react';
-import "./styles.css";    
+import { useState, useEffect } from "react";
+import "./styles.css";
 import NewTodoForm from "./assets/NewTodoForm";
-import TodoList from './assets/TodoList';
+import TodoList from "./assets/TodoList";
 
 interface Todo {
   id: string;
@@ -10,43 +10,50 @@ interface Todo {
 }
 
 function App() {
-  const [todos, setTodos] = useState<Todo[]>([]);
+  const [todos, setTodos] = useState<Todo[]>(() => {
+    const localValue = localStorage.getItem("ITEMS");
+    if (localValue == null) return [];
+    return JSON.parse(localValue);
+  });
 
-  function addTodo(title: string){
-    setTodos((currentTodos)=>{
-        return [
-            ...currentTodos,
-        {id:crypto.randomUUID(),title:title,completed:false},
-        ]
-    })
-  }
+  useEffect(() => {
+    localStorage.setItem("ITEMS", JSON.stringify(todos));
+  }, [todos]);
 
-  function toggleTodo(id :string, completed : boolean){
-    setTodos(currentTodos=>{
-      return currentTodos.map(todo =>{
-        if(todo.id===id){
-          return {...todo,completed};
-        }
-        return todo;
-      })
-    })
-  }
-
-  function deleteTodo(id: string){
-    setTodos(currentTodos => {
-      return currentTodos.filter(todo => todo.id !== id);
+  function addTodo(title: string) {
+    setTodos((currentTodos) => {
+      return [
+        ...currentTodos,
+        { id: crypto.randomUUID(), title: title, completed: false },
+      ];
     });
   }
 
+  function toggleTodo(id: string, completed: boolean) {
+    setTodos((currentTodos) => {
+      return currentTodos.map((todo) => {
+        if (todo.id === id) {
+          return { ...todo, completed };
+        }
+        return todo;
+      });
+    });
+  }
+
+  function deleteTodo(id: string) {
+    setTodos((currentTodos) => {
+      return currentTodos.filter((todo) => todo.id !== id);
+    });
+  }
 
   return (
     <>
-      <NewTodoForm onSubmit={addTodo}/>
+      <NewTodoForm onSubmit={addTodo} />
       <h1 className="header">Todo List</h1>
-      {todos.length===0 && "NO Todos"}
-      <TodoList todos={todos} toggleTodo={toggleTodo} deleteTodo={deleteTodo}/>
+      {todos.length === 0 && "NO Todos"}
+      <TodoList todos={todos} toggleTodo={toggleTodo} deleteTodo={deleteTodo} />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
