@@ -1,7 +1,11 @@
+import Navbar from "./assets/Navbar";
+import { Home } from "./pages/Home";
+
 function App() {
   return (
     <>
-      <h2>HIII</h2>
+      <Navbar />
+      <Home />
     </>
   );
 }

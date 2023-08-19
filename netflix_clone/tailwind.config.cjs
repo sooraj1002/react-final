@@ -1,6 +1,7 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
+import scrollbarHide from 'tailwind-scrollbar-hide';
 
-module.exports = {
+/** @type {import('tailwindcss').Config} */
+export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -8,5 +9,5 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [require('tailwind-scrollbar-hide')],
-};
+  plugins: [scrollbarHide],
+}
