@@ -6,11 +6,11 @@ export const Home = () => {
   return (
     <>
       <Main />
-      <Row title="Upcoming" requestURL={requests.requestUpcoming} />
-      <Row title="Popular" requestURL={requests.requestPopular} />
-      <Row title="Trending" requestURL={requests.requestTrending} />
-      <Row title="Top Rated" requestURL={requests.requestTopRated} />
-      <Row title="Horror" requestURL={requests.requestHorror} />
+      <Row rowId="1" title="Upcoming" requestURL={requests.requestUpcoming} />
+      <Row rowId="2" title="Popular" requestURL={requests.requestPopular} />
+      <Row rowId="3" title="Trending" requestURL={requests.requestTrending} />
+      <Row rowId="4" title="Top Rated" requestURL={requests.requestTopRated} />
+      <Row rowId="5" title="Horror" requestURL={requests.requestHorror} />
     </>
   );
 };
