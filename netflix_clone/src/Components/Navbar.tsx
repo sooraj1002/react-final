@@ -1,6 +1,18 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { UserAuth } from "../context/AuthContext";
 
 const Navbar = () => {
+  const { user, logOut } = UserAuth();
+  const navigate = useNavigate();
+  const handleLogout = async () => {
+    try {
+      await logOut();
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="flex items-center justify-between p-6 z-50 absolute w-full">
       <Link to="/">
@@ -8,16 +20,31 @@ const Navbar = () => {
           NETFLIX
         </h1>
       </Link>
-      <div>
-        <Link to="/login">
-          <button className="text-white pr-4">Sign In</button>
-        </Link>
-        <Link to="/signup">
-          <button className="bg-red-600 px-6 py-4 rounded cursor-pointer text-white">
-            Sign Up
+
+      {user?.email ? (
+        <div>
+          <Link to="/Account">
+            <button className="text-white pr-4">Account</button>
+          </Link>
+          <button
+            onClick={handleLogout}
+            className="bg-red-600 px-6 py-4 rounded cursor-pointer text-white"
+          >
+            Log Out
           </button>
-        </Link>
-      </div>
+        </div>
+      ) : (
+        <div>
+          <Link to="/login">
+            <button className="text-white pr-4">Sign In</button>
+          </Link>
+          <Link to="/signup">
+            <button className="bg-red-600 px-6 py-4 rounded cursor-pointer text-white">
+              Sign Up
+            </button>
+          </Link>
+        </div>
+      )}
     </div>
   );
 };

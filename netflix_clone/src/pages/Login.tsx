@@ -1,6 +1,26 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { UserAuth } from "../context/AuthContext";
 
 const Login = () => {
+  const { user, logIn } = UserAuth();
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [error, setError] = useState<string>("");
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+    try {
+      await logIn(email, password);
+      navigate("/");
+    } catch (err) {
+      console.log(err);
+      setError(err?.message);
+    }
+  };
+
   return (
     <>
       <div className="w-full h-screen">
@@ -10,17 +30,25 @@ const Login = () => {
           alt="/"
         />
         <div className="bg-black/60 fixed top-0 left-0 w-full h-screen"></div>
-        <div className="fixed w-full px-4 py-24 z-50 ">
+        <div className="fixed w-full px-4 py-24">
           <div className="max-w-[450px] h-[650px] mx-auto bg-black/75 text-white">
             <div className="max-w-[320px] mx-auto py-16">
               <h1 className="text-3xl font-bold text-center">Sign In</h1>
-              <form className="w-full flex flex-col py-4">
+              {error ? (
+                <p className="text-white p-3 bg-red-400 my-3">{error}</p>
+              ) : null}
+              <form
+                className="w-full flex flex-col py-4"
+                onSubmit={handleSubmit}
+              >
                 <input
+                  onChange={(e) => setEmail(e.target.value)}
                   className="p-3 m-2 bg-gray-700 rounded"
                   type="email"
                   placeholder="Email"
                 />
                 <input
+                  onChange={(e) => setPassword(e.target.value)}
                   className="p-3 m-2 bg-gray-700 rounded"
                   type="password"
                   placeholder="Password"
